@@ -168,3 +168,11 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
     'ROTATE_REFRESH_TOKENS': True,
 }
+
+
+UpdateAPIView used for update-only endpoints for a single model instance.
+
+path('change_password/<int:pk>/', ChangePasswordView.as_view(), name='auth_change_password'),
+
+
+flushexpiredtokens

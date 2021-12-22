@@ -6,7 +6,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 
 from .models import Image, Product
-from .serializers import (ImageSerializer, ProductSerializer)
+from .serializers import ImageSerializer, ProductSerializer
 
 
 # Create your views here.

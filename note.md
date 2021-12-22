@@ -116,4 +116,49 @@ http://127.0.0.1:8000/product/?omit=content
 http://127.0.0.1:8000/product/?expand=category
 http://127.0.0.1:8000/product/1/?expand=category
 http://127.0.0.1:8000/product/?expand=category&fields=name,category.name
+http://127.0.0.1:8000/product/1/?expand=category,comments,sites.company,sites.productsize&omit=content
+http://127.0.0.1:8000/product/?expand=category,comments,sites.company,sites.productsize&omit=content&category=4
+http://127.0.0.1:8000/product/1/?expand=image&omit=content
 ```
+
+To avoid circular import problems, it’s possible to lazily evaluate a string reference to you serializer class
+```
+expandable_fields = {
+  'category': ('reviews.CategorySerializer', {'many': True})
+}
+``` 
+```
+class ImageSerializer(FlexFieldsModelSerializer):
+    image = VersatileImageFieldSerializer(
+        sizes=[
+            ('full_size', 'url'),
+            ('thumbnail', 'thumbnail__100x100'), #  first position as the attribute of the image, second position as a ‘Rendition Key’ which dictates how the original image should be modified.
+        ]
+    )
+
+```
+
+https://github.com/rsinger86/drf-flex-fields
+
+
+CorsMiddleware should be placed before CommonMiddleware 
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://www.test-cors.org",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'www.test-cors.org',
+]
+
+CORS_ALLOW_CREDENTIALS = True

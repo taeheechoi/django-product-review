@@ -139,7 +139,7 @@ class ImageSerializer(FlexFieldsModelSerializer):
 ```
 
 https://github.com/rsinger86/drf-flex-fields
-
+https://www.test-cors.org/
 
 CorsMiddleware should be placed before CommonMiddleware 
 MIDDLEWARE = [
@@ -162,3 +162,9 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+Rotate the refresh tokens so that our users don’t have to log in again if they visit within 15 days.
+SIMPLE_JWT = {
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+    'ROTATE_REFRESH_TOKENS': True,
+}

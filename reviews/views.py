@@ -1,9 +1,13 @@
-from rest_framework.viewsets import ReadOnlyModelViewSet
-from .serializers import ProductSerializer, ImageSerializer
-from rest_framework.decorators import action
-from .models import Product, Image
-from rest_flex_fields.views import FlexFieldsMixin, FlexFieldsModelViewSet
 from rest_flex_fields import is_expanded
+from rest_flex_fields.views import FlexFieldsMixin, FlexFieldsModelViewSet
+from rest_framework.decorators import action, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ReadOnlyModelViewSet
+
+
+from .models import Image, Product
+from .serializers import (ImageSerializer, ProductSerializer)
+
 
 # Create your views here.
 class ProductViewSet(FlexFieldsMixin, ReadOnlyModelViewSet):
@@ -51,3 +55,6 @@ class ImageViewSet(FlexFieldsModelViewSet):
 
     serializer_class = ImageSerializer
     queryset = Image.objects.all()
+    permission_classes = [IsAuthenticated]
+    
+

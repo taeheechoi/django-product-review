@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_flex_fields import FlexFieldsModelSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from .models import (Category, Comment, Company, Image, Product, ProductSite,
@@ -78,3 +79,4 @@ class ImageSerializer(FlexFieldsModelSerializer):
     class Meta:
         model = Image
         fields = ['pk', 'name', 'image']
+
